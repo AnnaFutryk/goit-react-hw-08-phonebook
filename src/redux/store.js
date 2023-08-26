@@ -7,12 +7,23 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import persistReducer from 'redux-persist/es/persistReducer';
+import storage from 'redux-persist/lib/storage';
+import persistStore from 'redux-persist/es/persistStore';
+import authSlice from './auth/auth-slice';
 import { contactsReducer } from './contacts/slice';
 import { filterReducer } from './filterSlice';
+
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token'],
+};
 
 // створюємо store
 export const store = configureStore({
   reducer: {
+    auth: persistReducer(authPersistConfig, authSlice),
     contacts: contactsReducer,
     filter: filterReducer,
   },
@@ -25,3 +36,6 @@ export const store = configureStore({
       },
     }),
 });
+
+//створення стора, який зберігає стан при перезавантаженні
+export const persistor = persistStore(store);

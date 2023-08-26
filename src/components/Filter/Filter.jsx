@@ -1,12 +1,21 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from 'redux/selectors';
+import { getContacts, getFilter } from 'redux/selectors';
 import { changeFilter } from 'redux/filterSlice';
 import { Input, Label } from './Filter.styled';
+import { useEffect } from 'react';
+import { getContactsThunk } from 'redux/contacts/thunk';
 
 const filterInputId = nanoid();
 
 const Filter = () => {
+  const contacts = useSelector(getContacts); //отримання контактів зі стору через селекттор
+  const dispatchContact = useDispatch();
+
+  useEffect(() => {
+    dispatchContact(getContactsThunk()); //асинхронно отримуємо контакти
+  }, [dispatchContact]);
+
   const value = useSelector(getFilter);
   const dispatch = useDispatch();
 
@@ -18,17 +27,29 @@ const Filter = () => {
 
   return (
     <>
-      <Label>
-        Find contacts by name
-        <Input
-          type="text"
-          name="filter"
-          placeholder="Enter contact name"
-          value={value}
-          onChange={handleChangeFilter}
-          id={filterInputId}
-        />
-      </Label>
+      {contacts.length > 0 ? (
+        <Label>
+          Find contacts by name
+          <Input
+            type="text"
+            name="filter"
+            placeholder="Enter contact name"
+            value={value}
+            onChange={handleChangeFilter}
+            id={filterInputId}
+          />
+        </Label>
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            color: 'white',
+          }}
+        >
+          Your phonebook is empty. Add first contact!
+        </div>
+      )}
     </>
   );
 };

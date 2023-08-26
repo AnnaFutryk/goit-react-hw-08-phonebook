@@ -1,24 +1,31 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getContacts } from 'redux/selectors';
-import { getContactsThunk } from 'redux/contacts/thunk';
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
-import { Section } from './Section/Section';
-import { Head, SpanFirst, SpanSecond } from './Section/Section.styled';
+import ContactsPage from 'pages/ContactsPage/ContactsPage';
+import HomePage from 'pages/HomePage/HomePage';
+import LoginPage from 'pages/LoginPage/LoginPage';
+import RegisterPage from 'pages/RegisterPage/RegisterPage';
+import { Route, Routes } from 'react-router-dom';
+import { AppBar } from './AppBar/AppBar';
+import Layout from './Layout/Layout';
+// import ContactForm from './ContactForm/ContactForm';
+// import ContactList from './ContactList/ContactList';
+// import Filter from './Filter/Filter';
+// import { Section } from './Section/Section';
+// import { Head, SpanFirst, SpanSecond } from './Section/Section.styled';
 
 export const App = () => {
-  const contacts = useSelector(getContacts); //отримання контактів зі стору через селекттор
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getContactsThunk()); //асинхронно отримуємо контакти
-  }, [dispatch]);
-
   return (
     <>
-      <Section>
+      <AppBar />
+
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="contacts" element={<ContactsPage />} />
+        </Route>
+      </Routes>
+
+      {/* <Section>
         <Head>
           <SpanFirst>Phonebook</SpanFirst>
           <SpanSecond>Phonebook</SpanSecond>
@@ -26,21 +33,9 @@ export const App = () => {
         <ContactForm />
       </Section>
       <Section title="Contacts">
-        {contacts.length > 0 ? (
-          <Filter />
-        ) : (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              color: 'white',
-            }}
-          >
-            Your phonebook is empty. Add first contact!
-          </div>
-        )}
-        {contacts.length > 0 && <ContactList />}
-      </Section>
+        <Filter />
+        <ContactList />
+      </Section> */}
     </>
   );
 };

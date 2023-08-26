@@ -1,4 +1,6 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import {
   handleFulfilled,
   handleFulfilledAdd,
@@ -36,4 +38,9 @@ export const contactSlice = createSlice({
   },
 });
 
-export const contactsReducer = contactSlice.reducer;
+// export const contactsReducer = contactSlice.reducer;
+
+export const contactsReducer = persistReducer(
+  { key: 'contacts', storage },
+  contactSlice.reducer
+);

@@ -10,18 +10,22 @@ const ContactList = () => {
   const handleDelete = contactId => dispatch(deleteContactsThunk(contactId));
 
   return (
-    <List>
-      {contacts.map(contact => (
-        <Item key={contact.id}>
-          <p>
-            {contact.name} : <span>{contact.number}</span>
-          </p>
-          <Button type="button" onClick={() => handleDelete(contact.id)}>
-            Delete
-          </Button>
-        </Item>
-      ))}
-    </List>
+    <>
+      {contacts.length > 0 && (
+        <List>
+          {contacts.map(contact => (
+            <Item key={contact.id}>
+              <p>
+                {contact.name} : <span>{contact.number}</span>
+              </p>
+              <Button type="button" onClick={() => handleDelete(contact.id)}>
+                Delete
+              </Button>
+            </Item>
+          ))}
+        </List>
+      )}
+    </>
   );
 };
 
