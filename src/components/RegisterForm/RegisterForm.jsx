@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from 'redux/auth/auth-operations';
 
-import { Form, Label } from './RegisterForm.styled';
+import { Button, Form, Input, Label } from './RegisterForm.styled';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -35,27 +35,43 @@ export const RegisterForm = () => {
     <Form onSubmit={handleSubmit} autoComplete="off">
       <Label>
         Username
-        <input type="text" name="name" value={name} onChange={handleChange} />
+        <Input
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          placeholder="Enter your name"
+          pattern="^[^\d]+$"
+          title="The name must contain only letters, apostrophes, hyphens and indents"
+          required
+        />
       </Label>
       <Label>
         Email
-        <input
+        <Input
           type="email"
           name="email"
           value={email}
           onChange={handleChange}
+          placeholder="example@mail.com"
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          required
         />
       </Label>
       <Label>
         Password
-        <input
+        <Input
           type="password"
           name="password"
           value={password}
           onChange={handleChange}
+          placeholder="Enter your password"
+          pattern="^[a-zA-Z0-9!@#$%^&*()-_=+`~[\]{}|:<>/?]+$"
+          title="The password must contain only Latin letters (both upper and lower case), numbers and other symbols"
+          required
         />
       </Label>
-      <button type="submit">Register</button>
+      <Button type="submit">Register</Button>
     </Form>
   );
 };

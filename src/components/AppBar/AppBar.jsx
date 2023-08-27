@@ -1,4 +1,4 @@
-import { Header } from './AppBar.styled';
+import { Header, Wrapper } from './AppBar.styled';
 import { Navigation } from 'components/Navigation/Navigation';
 import { AuthNav } from 'components/AuthNav/AuthNav';
 import { UserMenu } from 'components/UserMenu/UserMenu';
@@ -9,9 +9,11 @@ export const AppBar = () => {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
   return (
-    <Header>
-      <Navigation />
-      {isLoggedIn ? <UserMenu /> : <AuthNav />}
-    </Header>
+    <Wrapper>
+      <Header>
+        <Navigation />
+        {isLoggedIn ? <UserMenu /> : <AuthNav />}
+      </Header>
+    </Wrapper>
   );
 };

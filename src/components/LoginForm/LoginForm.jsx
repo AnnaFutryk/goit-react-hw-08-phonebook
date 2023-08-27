@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from 'redux/auth/auth-operations';
-import { Form, Label } from './LoginForm.styled';
+import { Button, Form, Input, Label } from './LoginForm.styled';
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -31,23 +31,30 @@ export const LoginForm = () => {
     <Form onSubmit={handleSubmit} autoComplete="off">
       <Label>
         Email
-        <input
+        <Input
           type="email"
           name="email"
           value={email}
           onChange={handleChange}
+          placeholder="example@mail.com"
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          required
         />
       </Label>
       <Label>
         Password
-        <input
+        <Input
           type="password"
           name="password"
           value={password}
           onChange={handleChange}
+          placeholder="Enter your password"
+          pattern="^[a-zA-Z0-9!@#$%^&*()-_=+`~[\]{}|:<>/?]+$"
+          title="The password must contain only Latin letters (both upper and lower case), numbers and other symbols"
+          required
         />
       </Label>
-      <button type="submit">Log In</button>
+      <Button type="submit">Log In</Button>
     </Form>
   );
 };

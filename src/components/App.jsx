@@ -6,6 +6,7 @@ import { authOperations } from 'redux/auth/auth-operations';
 import authSelectors from 'redux/auth/auth-selectors';
 import { AppBar } from './AppBar/AppBar';
 import Layout from './Layout/Layout';
+import Loader from './Loader/Loader';
 import PrivateRoute from './PrivateRoute';
 import RestrictedRoute from './RestrictedRoute';
 
@@ -28,41 +29,41 @@ export const App = () => {
     }
   }, [dispatch, userRefreshed]);
 
-  return (
-    !isRefreshingUser && (
-      <>
-        <AppBar />
+  return !isRefreshingUser ? (
+    <>
+      <AppBar />
 
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route
-              path="register"
-              element={
-                <RestrictedRoute redirectTo="/contacts">
-                  <RegisterPage />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="login"
-              element={
-                <RestrictedRoute redirectTo="/contacts">
-                  <LoginPage />
-                </RestrictedRoute>
-              }
-            />
-            <Route
-              path="/contacts"
-              element={
-                <PrivateRoute redirectTo="/login">
-                  <ContactsPage />
-                </PrivateRoute>
-              }
-            />
-          </Route>
-        </Routes>
-      </>
-    )
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="register"
+            element={
+              <RestrictedRoute redirectTo="/contacts">
+                <RegisterPage />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <RestrictedRoute redirectTo="/contacts">
+                <LoginPage />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute redirectTo="/login">
+                <ContactsPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+      </Routes>
+    </>
+  ) : (
+    <Loader />
   );
 };

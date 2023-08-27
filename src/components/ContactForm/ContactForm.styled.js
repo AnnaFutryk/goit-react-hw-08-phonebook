@@ -30,14 +30,13 @@ export const Button = styled.button`
   cursor: pointer;
   border-radius: 20px;
   border: none;
-  color: #ddd;
+  background-color: lightgray;
   font-size: 20px;
   color: black;
   transition: transform 250ms linear, box-shadow 250ms linear;
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3),
-      inset 0px -6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 12px lightblue, inset 0px -6px 12px lightblue;
   }
 `;
