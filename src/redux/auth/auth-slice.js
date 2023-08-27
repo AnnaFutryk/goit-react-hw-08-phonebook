@@ -6,7 +6,8 @@ const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
-  isRefreshingUser: false,
+  isRefreshingUser: false, //вказує, чи відбувається наразі процес оновлення даних користувача; блокує певні дії,коли дані користувача оновлюються
+  userRefreshed: false, //вказує, чи вже було оновлено дані користувача в поточному сеансі (незалежно від стану isRefreshingUser). Дозволяє виконувати певні дії тільки один раз, коли дані користувача було оновлено, запобігає повторюваним оновленням
 };
 
 const authSlice = createSlice({
@@ -35,9 +36,11 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isLoggedIn = true;
       state.isRefreshingUser = false;
+      state.userRefreshed = true;
     },
     [authOperations.refreshUser.rejected](state) {
       state.isRefreshingUser = false;
+      state.userRefreshed = true;
     },
   },
 });
