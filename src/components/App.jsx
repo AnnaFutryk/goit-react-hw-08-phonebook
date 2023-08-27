@@ -2,16 +2,20 @@ import ContactsPage from 'pages/ContactsPage/ContactsPage';
 import HomePage from 'pages/HomePage/HomePage';
 import LoginPage from 'pages/LoginPage/LoginPage';
 import RegisterPage from 'pages/RegisterPage/RegisterPage';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { authOperations } from 'redux/auth/auth-operations';
 import { AppBar } from './AppBar/AppBar';
 import Layout from './Layout/Layout';
-// import ContactForm from './ContactForm/ContactForm';
-// import ContactList from './ContactList/ContactList';
-// import Filter from './Filter/Filter';
-// import { Section } from './Section/Section';
-// import { Head, SpanFirst, SpanSecond } from './Section/Section.styled';
 
 export const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authOperations.refreshUser());
+  });
+
   return (
     <>
       <AppBar />
@@ -24,18 +28,6 @@ export const App = () => {
           <Route path="contacts" element={<ContactsPage />} />
         </Route>
       </Routes>
-
-      {/* <Section>
-        <Head>
-          <SpanFirst>Phonebook</SpanFirst>
-          <SpanSecond>Phonebook</SpanSecond>
-        </Head>
-        <ContactForm />
-      </Section>
-      <Section title="Contacts">
-        <Filter />
-        <ContactList />
-      </Section> */}
     </>
   );
 };

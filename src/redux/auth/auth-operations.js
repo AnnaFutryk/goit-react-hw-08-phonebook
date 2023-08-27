@@ -37,12 +37,24 @@ const logout = createAsyncThunk('auth/logout', async () => {
   } catch (error) {}
 });
 
-const refreshUser = createAsyncThunk('auth/refreshUser', async credentials => {
-  try {
-    const { data } = await axios.post('users/refreshUser', credentials);
-    return data;
-  } catch (error) {}
-});
+const refreshUser = createAsyncThunk(
+  'auth/refreshUser',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    //якщо розлогінений і нема токену, то виходимо. thunkAPI.rejectWithValue();бо return вертає undefined і тоді помилки при рефрешЮзер
+    if (persistedToken === null) {
+      return thunkAPI.rejectWithValue();
+    }
+
+    token.set(persistedToken);
+    try {
+      const { data } = await axios.get('/users/current');
+      return data;
+    } catch (error) {}
+  }
+);
 
 export const authOperations = {
   register,
