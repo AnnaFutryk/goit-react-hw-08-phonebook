@@ -1,3 +1,4 @@
+import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 import { lazy } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +24,7 @@ export const App = () => {
   const userRefreshed = useSelector(authSelectors.getUserRefreshed);
 
   useEffect(() => {
-    // Виконуйте оновлення користувача лише раз, якщо він ще не був оновлений
+    // Виконує оновлення користувача лише раз, якщо він ще не був оновлений
     if (!userRefreshed) {
       dispatch(authOperations.refreshUser());
     }
@@ -60,6 +61,7 @@ export const App = () => {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </>
